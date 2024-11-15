@@ -3,6 +3,7 @@ import streamlit as st
 from utils import load_model, predict_and_plot_image 
 
 model, device = load_model()
+st.title("Detector de alfabeto LSA")
 image = st.camera_input("Saca una foto de la seña")
 image = st.file_uploader("Sube una foto", type=["png", "jpg"])
 # Check if an image is uploaded before attempting to process it
