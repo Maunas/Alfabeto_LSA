@@ -45,7 +45,7 @@ def predict_and_plot_image(model, image, device):
   # Ejecuta el modelo en la imagen y obtén las predicciones
   model.eval()
   with torch.no_grad():
-      detections = model([image.to(device)])[0]
+      detections = model([image_tensor.to(device)])[0]
 
   boxes = [detections['boxes'][0]]
   labels = [detections['labels'][0]]
