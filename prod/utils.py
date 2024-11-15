@@ -17,7 +17,7 @@ class CustomBoxPredictor(nn.Module):
         # Retornamos los logits de las clases y las regresiones de las cajas
         return self.cls_score(x), self.bbox_pred(x)
 
-@st.cache
+@st.cache_resource
 def load_model():
     model = fasterrcnn_resnet50_fpn(weights='DEFAULT')
     num_classes = 27 #Letras + fondo
