@@ -39,8 +39,8 @@ def get_letter_from_number(number):
     return inverse_label_map.get(number, "Unknown")  # Retorna "Unknown" si el número no está en el mapa
 
 def predict_and_plot_image(model, image, device):
-  # Convertir la imagen al formato de numpy y moverla a CPU
-  imagePIL = T.ToTensor()(image).permute(1, 2, 0).numpy()
+    transform = T.ToTensor()
+    image_tensor = transform(image).unsqueeze(0).to(device)
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
   model.eval()
