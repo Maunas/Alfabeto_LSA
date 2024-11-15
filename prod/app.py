@@ -1,6 +1,6 @@
 import torch
 import streamlit as st
-import load_model, predict_and_plot_image, label_map from utils
+from utils import load_model, predict_and_plot_image, label_map 
 
 model, device = load_model()
 image = st.file_uploader("Sube una foto", type=["png","jpg"])
