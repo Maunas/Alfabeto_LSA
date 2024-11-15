@@ -4,6 +4,7 @@ from torchvision.models.detection import fasterrcnn_resnet50_fpn
 import torchvision.transforms as T
 from PIL import Image
 import matplotlib.pyplot as plt
+import streamlit as st
 
 class CustomBoxPredictor(nn.Module):
     def __init__(self, in_features, num_classes):
