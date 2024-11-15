@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
 import torchvision.transforms as T
+from PIL import Image
 import matplotlib.pyplot as plt
 
 class CustomBoxPredictor(nn.Module):
@@ -39,8 +40,9 @@ def get_letter_from_number(number):
     return inverse_label_map.get(number, "Unknown")  # Retorna "Unknown" si el número no está en el mapa
 
 def predict_and_plot_image(model, image, device):
+  imagePIL = Image.open(image)
   transform = T.ToTensor()
-  image_tensor = transform(image).to(device)
+  image_tensor = transform(imagePIL).to(device)
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
   model.eval()
