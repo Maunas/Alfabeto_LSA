@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 from torchvision.models.detection import fasterrcnn_resnet50_fpn
+import torchvision.transforms as T
+import matplotlib.pyplot as plt
 
 class CustomBoxPredictor(nn.Module):
     def __init__(self, in_features, num_classes):
@@ -24,7 +26,7 @@ def load_model():
     model.eval()
     return model, device
 
-def predict_and_plot_image(model, image, device, label_map):
+def predict_and_plot_image(model, image, device):
   # Convertir la imagen al formato de numpy y moverla a CPU
   imagePIL = T.ToPILImage()(image.cpu())
   imagePIL = T.ToTensor()(imagePIL).permute(1, 2, 0).numpy()
