@@ -26,10 +26,21 @@ def load_model():
     model.eval()
     return model, device
 
+label_map = {
+    "A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9,
+    "J": 10, "K": 11, "L": 12, "M": 13, "N": 14, "O": 15, "P": 16, "Q": 17,
+    "R": 18, "S": 19, "T": 20, "U": 21, "V": 22, "W": 23, "X": 24, "Y": 25,
+    "Z": 26
+}
+
+inverse_label_map = {v: k for k, v in label_map.items()}
+
+def get_letter_from_number(number):
+    return inverse_label_map.get(number, "Unknown")  # Retorna "Unknown" si el número no está en el mapa
+
 def predict_and_plot_image(model, image, device):
   # Convertir la imagen al formato de numpy y moverla a CPU
-  imagePIL = T.ToPILImage()(image.cpu())
-  imagePIL = T.ToTensor()(imagePIL).permute(1, 2, 0).numpy()
+  imagePIL = T.ToTensor()(image).permute(1, 2, 0).numpy()
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
   model.eval()
@@ -54,9 +65,3 @@ def predict_and_plot_image(model, image, device):
   plt.axis('off')
   return plt
 
-label_map = {
-    "A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9,
-    "J": 10, "K": 11, "L": 12, "M": 13, "N": 14, "O": 15, "P": 16, "Q": 17,
-    "R": 18, "S": 19, "T": 20, "U": 21, "V": 22, "W": 23, "X": 24, "Y": 25,
-    "Z": 26
-}
