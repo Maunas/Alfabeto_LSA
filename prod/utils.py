@@ -62,7 +62,7 @@ def predict_and_plot_image(model, image, device):
       xmin, ymin, xmax, ymax = box.cpu()
       plt.gca().add_patch(plt.Rectangle((xmin, ymin), xmax - xmin, ymax - ymin,
                                         edgecolor='green', fill=False, linewidth=2))
-      # Etiqueta con la clase y el puntaje de confianza
+
       label = f"Class: {get_letter_from_number(labels[i].item())}, Score: {scores[i].item():.2f}"
       plt.text(xmin, ymin, label, color='white', fontsize=10,
               bbox=dict(facecolor='green', edgecolor='green', alpha=0.5))
