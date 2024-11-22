@@ -2,7 +2,7 @@ import torch
 import streamlit as st
 from utils import load_model, predict_and_plot_image 
 
-from camera_input_live import camera_input_live
+#from camera_input_live import camera_input_live
 
 model, device = load_model()
 gallery = []
@@ -29,11 +29,12 @@ if modo == "Subir Foto":
         st.pyplot(plot)
         gallery.append(plot)
 
-if modo == "Vivo":
-    image = camera_input_live()
-    if image is not None :
-        plot = predict_and_plot_image(model, image, device)
-        st.pyplot(plot)
-        gallery.append(plot)
+
+#if modo == "Vivo":
+#    image = camera_input_live()
+#    if image is not None :
+#        plot = predict_and_plot_image(model, image, device)
+#        st.pyplot(plot)
+#        gallery.append(plot)
 
     
