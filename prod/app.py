@@ -2,11 +2,10 @@ import torch
 import streamlit as st
 from utils import load_model, predict_and_plot_image 
 
-#from camera_input_live import camera_input_live
-
 model, device = load_model()
 gallery = []
 
+st.set_page_config(page_title="Alfabeto LSA")
 
 st.title("Detector de alfabeto LSA")
 st.write("Sacate una foto realizando una seña del alfabeto, o sube una foto al sistema.")
@@ -28,13 +27,5 @@ if modo == "Subir Foto":
         plot = predict_and_plot_image(model, image, device)
         st.pyplot(plot)
         gallery.append(plot)
-
-
-#if modo == "Vivo":
-#    image = camera_input_live()
-#    if image is not None :
-#        plot = predict_and_plot_image(model, image, device)
-#        st.pyplot(plot)
-#        gallery.append(plot)
 
     
