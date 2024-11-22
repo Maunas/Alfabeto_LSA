@@ -46,7 +46,6 @@ def predict_and_plot_image(model, image, device):
   imagePIL = Image.open(image).convert("RGB")
   transform = T.ToTensor()
   image_tensor = transform(imagePIL).to(device)
-  print(image_tensor.shape)
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
   model.eval()
