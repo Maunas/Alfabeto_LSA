@@ -3,6 +3,8 @@ import streamlit as st
 from utils import load_model, predict_and_plot_image 
 from streamlit_extras.grid import grid
 
+from camera_input_live import camera_input_live
+
 st.set_page_config(page_title="Alfabeto LSA")
 
 model, device = load_model()
@@ -25,7 +27,7 @@ st.title("Detector de alfabeto LSA")
 st.write("Sacate una foto realizando una seña del alfabeto, o sube una foto al sistema.")
 
 modo = st.radio("Elegir Método de Captura", [
-    "Abrir Cámara", "Subir Foto", "Galería"
+    "Abrir Cámara", "Subir Foto", "Galería", "Live"
 ], index=0,horizontal=True, )
 
 if modo == "Abrir Cámara":
@@ -50,3 +52,10 @@ elif modo == "Galería":
                 st.write(label)
     else:
         st.write("Aún no hay imágenes en la galería.")
+
+        # Modo: Galería
+elif modo == "Live":
+    image = camera_input_live()
+    if image is not None :
+        plot, label = predict_and_plot_image(model, image, device)
+        st.image(plot)
