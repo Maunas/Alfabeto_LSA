@@ -1,2 +1,0 @@
-*.pt filter=lfs diff=lfs merge=lfs -text
-prod/modelo.pt filter=lfs diff=lfs merge=lfs -text
