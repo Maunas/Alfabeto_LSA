@@ -42,7 +42,7 @@ def get_letter_from_number(number):
     return inverse_label_map.get(number, "Unknown")  # Retorna "Unknown" si el número no está en el mapa
 
 def predict_and_plot_image(model, image, device):
-  imagePIL = Image.open(image)
+  imagePIL = Image.open(image).convert("RGB")
   transform = T.ToTensor()
   image_tensor = transform(imagePIL).to(device)
   image_tensor.unsqueeze(0)
