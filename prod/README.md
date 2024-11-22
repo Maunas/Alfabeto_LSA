@@ -1,1 +1,0 @@
-# Alfabeto_LSA
