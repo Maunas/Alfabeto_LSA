@@ -25,7 +25,7 @@ def load_model():
     model.roi_heads.box_predictor = CustomBoxPredictor(in_features, num_classes)
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     model.to(device)
-    model.load_state_dict(torch.load('prod/modelo.pt',weights_only=True, map_location=device))
+    model.load_state_dict(torch.load('prod/modelo.pt', map_location=device))
     model.eval()
     return model, device
 
@@ -45,7 +45,6 @@ def predict_and_plot_image(model, image, device):
   imagePIL = Image.open(image).convert("RGB")
   transform = T.ToTensor()
   image_tensor = transform(imagePIL).to(device)
-  image_tensor.unsqueeze(0)
   print(image_tensor.shape)
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
