@@ -6,27 +6,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import streamlit as st
 from io import BytesIO
-import requests
 import os
-
-def download_model_from_drive(destination):
-    # URL para descargar archivos compartidos de Google Drive
-    download_url = "https://drive.google.com/uc?id=1ZDyu6xUNLlo8s3SL4e0AhDQpWNvicNr8"
-    
-    response = requests.get(download_url, stream=True)
-    if response.status_code == 200:
-        with open(destination, "wb") as f:
-            for chunk in response.iter_content(chunk_size=1024):
-                if chunk:
-                    f.write(chunk)
-        print(f"Modelo guardado en {destination}.")
-    else:
-        print("Error al descargar el archivo.")
-        response.raise_for_status()
-
-ruta_modelo = "prod/rcnn.pt"
-if not os.path.exists(ruta_modelo):
-    download_model_from_drive(ruta_modelo)
+import gdown
 
 class CustomBoxPredictor(nn.Module):
     def __init__(self, in_features, num_classes):
@@ -40,15 +21,30 @@ class CustomBoxPredictor(nn.Module):
         return self.cls_score(x), self.bbox_pred(x)
 
 @st.cache_resource
+def download_model(modelo):
+    """
+    Descarga el modelo desde Google Drive.
+    """
+    if not os.path.exists(modelo):
+        url = "https://drive.google.com/uc?id=1ZDyu6xUNLlo8s3SL4e0AhDQpWNvicNr8"
+        gdown.download(url, modelo, quiet=False)
+    return modelo
+
+@st.cache_resource
 def load_model():
+
+    modelo = "prod/modelo.pth"
+
+    download_model(modelo)
+
     model = fasterrcnn_resnet50_fpn(weights='DEFAULT')
     num_classes = 27 #Letras + fondo
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = CustomBoxPredictor(in_features, num_classes)
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     model.to(device)
-    model.load_state_dict(torch.load(ruta_modelo
-        ,weights_only=True , map_location=device))
+    model.load_state_dict(torch.load(modelo,
+                                     weights_only=True , map_location=device))
 
     model.eval()
     return model, device
@@ -63,7 +59,7 @@ label_map = {
 inverse_label_map = {v: k for k, v in label_map.items()}
 
 def get_letter_from_number(number):
-    return inverse_label_map.get(number, "Unknown")  # Retorna "Unknown" si el número no está en el mapa
+    return inverse_label_map.get(number, "?")
 
 def predict_and_plot_image(model, image, device):
   imagePIL = Image.open(image).convert("RGB")
@@ -71,7 +67,6 @@ def predict_and_plot_image(model, image, device):
   image_tensor = transform(imagePIL).to(device)
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
-  model.eval()
   with torch.no_grad():
       detections = model([image_tensor.to(device)])[0]
 

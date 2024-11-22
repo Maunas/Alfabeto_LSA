@@ -3,3 +3,4 @@ streamlit
 torchvision
 matplotlib
 streamlit-extras
+gdown
