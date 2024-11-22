@@ -3,4 +3,4 @@ streamlit
 torchvision
 matplotlib
 streamlit-camera-input-live
-streamlit_extras
+streamlit-extras
