@@ -8,11 +8,11 @@ Este proyecto utiliza un modelo de detección de objetos para detectar letras en
     
 ## Instalar Dependencias
 
-    pip install -r prod\requirements.txt
+    pip install -r prod/requirements.txt
 
 ## Ejecutar aplicación
 
-    streamlit run prod\app.py
+    streamlit run prod/app.py
 
 O entra a la aplicación en Community Cloud:
 
