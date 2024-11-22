@@ -44,8 +44,8 @@ def get_letter_from_number(number):
 def predict_and_plot_image(model, image, device):
   imagePIL = Image.open(image)
   transform = T.ToTensor()
-  print(transform.shape)
   image_tensor = transform(imagePIL).to(device)
+  print(image_tensor.shape)
 
   # Ejecuta el modelo en la imagen y obtén las predicciones
   model.eval()
