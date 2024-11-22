@@ -2,3 +2,4 @@ torch==2.4.1
 streamlit
 torchvision
 matplotlib
+streamlit-camera-input-live
