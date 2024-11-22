@@ -13,3 +13,7 @@ Este proyecto utiliza un modelo de detección de objetos para detectar letras en
 ## Ejecutar aplicación
 
     streamlit run prod\app.py
+
+O entra a la aplicación en Community Cloud:
+
+https://alfabeto-lsa-rnp.streamlit.app/
