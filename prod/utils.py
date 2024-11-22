@@ -24,7 +24,7 @@ def download_model_from_drive(destination):
         print("Error al descargar el archivo.")
         response.raise_for_status()
 
-ruta_modelo = "prod/modelo.pt"
+ruta_modelo = "prod/rcnn.pt"
 if not os.path.exists(ruta_modelo):
     download_model_from_drive(ruta_modelo)
 
@@ -47,9 +47,6 @@ def load_model():
     model.roi_heads.box_predictor = CustomBoxPredictor(in_features, num_classes)
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     model.to(device)
-    #Cambiada la ruta, por superar los límites de GLF
-    #model.load_state_dict(torch.load('prod/modelo.pt',weights_only=True , map_location=device))
-
     model.load_state_dict(torch.load(ruta_modelo
         ,weights_only=True , map_location=device))
 
