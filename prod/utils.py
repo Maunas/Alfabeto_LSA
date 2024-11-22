@@ -5,6 +5,7 @@ import torchvision.transforms as T
 from PIL import Image
 import matplotlib.pyplot as plt
 import streamlit as st
+from io import BytesIO
 
 class CustomBoxPredictor(nn.Module):
     def __init__(self, in_features, num_classes):
@@ -64,9 +65,15 @@ def predict_and_plot_image(model, image, device):
       plt.gca().add_patch(plt.Rectangle((xmin, ymin), xmax - xmin, ymax - ymin,
                                         edgecolor='green', fill=False, linewidth=2))
 
-      label = f"Class: {get_letter_from_number(labels[i].item())}, Score: {scores[i].item():.2f}"
+      label = f"Class: {get_letter_from_number(labels[0].item())}, Score: {scores[i].item():.2f}"
       plt.text(xmin, ymin, label, color='white', fontsize=10,
               bbox=dict(facecolor='green', edgecolor='green', alpha=0.5))
   plt.axis('off')
-  return plt
+  return convert_plot_to_img(plt), get_letter_from_number(labels[0].item())
 
+def convert_plot_to_img(plot):
+    # Convertir el gráfico a una imagen en formato PNG
+    buf = BytesIO()
+    plot.savefig(buf, format="png", bbox_inches='tight', pad_inches=0)
+    buf.seek(0)  # Volver al principio del buffer para poder leerlo
+    return buf
