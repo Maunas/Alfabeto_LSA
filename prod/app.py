@@ -1,7 +1,7 @@
-import torch
 import streamlit as st
 from utils import load_model, predict_and_plot_image 
 from streamlit_extras.grid import grid
+
 
 st.set_page_config(page_title="Alfabeto LSA")
 
