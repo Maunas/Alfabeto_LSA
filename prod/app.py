@@ -1,7 +1,5 @@
 import streamlit as st
-from utils import load_model, predict_and_plot_image 
-from streamlit_extras.grid import grid
-
+from utils import load_model, predict_and_plot_image
 
 st.set_page_config(page_title="Alfabeto LSA")
 
@@ -25,7 +23,7 @@ st.title("Detector de alfabeto LSA")
 st.write("Sacate una foto realizando una seña del alfabeto, o sube una foto al sistema.")
 
 modo = st.radio("Elegir Método de Captura", [
-    "Abrir Cámara", "Subir Foto", "Galería", "Live"
+    "Abrir Cámara", "Subir Foto", "Galería"
 ], index=0,horizontal=True, )
 
 if modo == "Abrir Cámara":
