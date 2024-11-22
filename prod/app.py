@@ -1,6 +1,7 @@
 import torch
 import streamlit as st
 from utils import load_model, predict_and_plot_image 
+from streamlit_extras.grid import grid
 
 model, device = load_model()
 gallery = []
@@ -11,7 +12,7 @@ st.title("Detector de alfabeto LSA")
 st.write("Sacate una foto realizando una seña del alfabeto, o sube una foto al sistema.")
 
 modo = st.radio("Elegir Método de Captura", [
-    "Abrir Cámara", "Subir Foto"
+    "Abrir Cámara", "Subir Foto", "Galería"
 ], index=0,horizontal=True, )
 
 if modo == "Abrir Cámara":
@@ -28,4 +29,7 @@ if modo == "Subir Foto":
         st.pyplot(plot)
         gallery.append(plot)
 
-    
+if modo == "Galeria":
+    my_grid = grid(5, "small")
+    for plot in gallery:
+        st.pyplot(plot)
