@@ -6,6 +6,27 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import streamlit as st
 from io import BytesIO
+import requests
+import os
+
+def download_model_from_drive(destination):
+    # URL para descargar archivos compartidos de Google Drive
+    download_url = "https://drive.google.com/uc?id=1ZDyu6xUNLlo8s3SL4e0AhDQpWNvicNr8"
+    
+    response = requests.get(download_url, stream=True)
+    if response.status_code == 200:
+        with open(destination, "wb") as f:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
+                    f.write(chunk)
+        print(f"Modelo guardado en {destination}.")
+    else:
+        print("Error al descargar el archivo.")
+        response.raise_for_status()
+
+ruta_modelo = "prod/modelo.pt"
+if not os.path.exists(ruta_modelo):
+    download_model_from_drive(ruta_modelo)
 
 class CustomBoxPredictor(nn.Module):
     def __init__(self, in_features, num_classes):
@@ -29,7 +50,7 @@ def load_model():
     #Cambiada la ruta, por superar los límites de GLF
     #model.load_state_dict(torch.load('prod/modelo.pt',weights_only=True , map_location=device))
 
-    model.load_state_dict(torch.load("https://drive.google.com/uc?id=1ZDyu6xUNLlo8s3SL4e0AhDQpWNvicNr8"
+    model.load_state_dict(torch.load(ruta_modelo
         ,weights_only=True , map_location=device))
 
     model.eval()
